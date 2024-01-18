@@ -4,7 +4,7 @@ import {customerAnimation} from "./animation";
 import {CommonModule} from "@angular/common";
 import {
   AbstractControl,
-  FormControl, FormGroup,
+  FormControl,
   FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
