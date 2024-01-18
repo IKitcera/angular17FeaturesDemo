@@ -1,0 +1,71 @@
+<div class="header-container ml">
+  <div class="verticalAlign">
+    <button mat-raised-button color="primary" (click)="addCustomer()">Add customer</button>
+    <button mat-raised-button color="accent" (click)="clearActiveCustomers()">Clear customers</button>
+    <button mat-raised-button color="warn" (click)="resetCacheBalance()">Reset balance</button>
+  </div>
+
+  <div class="verticalAlign">
+<!--    TODO: Accent on appearance types-->
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Min product price</mat-label>
+      <input matInput type="number" [formControl]="minProductPrice">
+      @if (minProductPrice.errors) {
+        @for (key of Object.keys(minProductPrice.errors || []); track key) {
+          <mat-error>{{ key }}</mat-error>
+<!--          <mat-error>key:{{key}} val: {{minProductPrice.errors[key]}}</mat-error>-->
+        }
+      }
+      <mat-error></mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Max product price</mat-label>
+      <input matInput type="number" [formControl]="maxProductPrice">
+      @if (maxProductPrice.errors) {
+        @for (key of Object.keys(maxProductPrice.errors); track key) {
+          <mat-error>{{ key }}</mat-error>
+<!--          <mat-error>key:{{key}} val: {{maxProductPrice.errors[key]}}</mat-error>-->
+        }
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="allign-right">
+    <h3>Active customers: {{getActiveCustomers()}}</h3>
+
+    <!--    TODO: Accent on signal reading-->
+    <h2>{{cacheBalance$() | currency}}</h2>
+  </div>
+</div>
+
+
+
+<div class="ml shop">
+  <div class="shop-title">My Awesome Shop</div>
+
+<!--  <app-shelving [show]="true"></app-shelving>-->
+  <app-shelving show></app-shelving>
+
+  <div class="cash-register">
+    <div class="table">
+      <div class="tableBoard"></div>
+      <div class="table-leg1"></div>
+      <div class="table-leg2"></div>
+    </div>
+    <div class="cache-machine"></div>
+  </div>
+  <div class="exit"></div>
+
+  @for (customer of simulationService.customers;track customer.id) {
+    <div class="customer move" [@customerAnimation]="customer">
+      <div class="head"></div>
+      <div class="body"></div>
+      <div class="legs"></div>
+    </div>
+  }
+</div>
+
+<div class="ml">
+ <a [routerLink]="['test']">Try to deactivate when there'll be no active customers</a>
+</div>
